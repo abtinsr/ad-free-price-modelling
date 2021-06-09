@@ -558,6 +558,24 @@ for (p in seq(0, 1, 0.01)) {
   
 }
 
+scenarios_melt <- 
+  scenarios %>% 
+  dplyr::select(-c(Subscribers)) %>% 
+  filter(Percentile > 0) %>% 
+  melt(id=c("Percentile"))
+
+ggplot(data = scenarios_melt, 
+       aes(x = Percentile, 
+           y = value, 
+           color = variable)) +
+  geom_line(size = 1) +
+  labs(title = "Modelling of ad free add-on price", 
+       x = "% highest ad-revenue users signing up for ad free", 
+       y = "Break-even price (SEK)", 
+       color = "Models and variants") + 
+  scale_x_continuous(labels = scales::percent_format(accuracy = 1)) +
+  theme_clean()
+
 ######################################################
 ##### HOW MUCH OF THE REVENUE DOES THE TOP X% MAKE?
 ######################################################
